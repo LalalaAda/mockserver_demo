@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>抽奖</title>
+  <style>
+    html * {outline: 0;-webkit-text-size-adjust: none;-webkit-tap-highlight-color: rgba(0,0,0,0);}
+    html,body{-moz-osx-font-smoothing: grayscale;-webkit-font-smoothing: antialiased;-webkit-text-size-adjust: 100%;text-size-adjust:100%;}
+    body{overflow-x: hidden;width:100%;width: 100vw;margin: 0;padding: 0;}
+    input,button{outline: 0;}
+    a{text-decoration: none;-webkit-tap-highlight-color: transparent;}
+    .clearfix{*zoom: 1;/* ie 6/7 */}
+    .clearfix:before, .clearfix:after{ content: " ";display: table; }
+    .clearfix:after{clear: both;}
+    h1,h2,h3,h4,h5,h6,p,ul,li{margin: 0;padding: 0;}
+    ul,li{list-style: none;}
+    img{vertical-align: middle;}
+    input[type="submit"],input[type="reset"],input[type="button"],button {-webkit-appearance: none;}
+    .fl{float: left;} .fr{float: right;}
+    .font-ellipsis{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+    .fcolor_grey{color: #999;}
+    .fjustify{text-align: justify;}
+  </style>
+  <script>
+    !function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/10;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var q=a.devicePixelRatio,u=q.toString().match(/^[1-9]\d*$/g);i=u?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));
+  </script>
+  <style>
+    body{background-color:#f46333;background-image:-webkit-linear-gradient(270deg,#e94320 0%,#f76d39 70%);min-height:100vh;}
+    .container{background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/c_bg.png") no-repeat;background-size:100% auto;background-position:top center;min-height:100vh;overflow:hidden;position:relative;}
+    .record{width:2.186667rem;height:1.92rem;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_ico-record.png") no-repeat;background-size:contain;background-position:center;display:block;position:absolute;top:3.466667rem;right:0.186667rem;z-index:5;}
+    .desk{width:9.72rem;height:10.866667rem;position:relative;overflow:hidden;margin:4.32rem auto 0.32rem;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_desk2.png") no-repeat;background-position:center;background-size:contain;}
+    .btn-pan{
+      width: 8.133333rem;height: 8.106667rem;display: block;position: absolute;z-index: 19;top:1.51rem;left:50%;margin-left:-4.066667rem;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_pan2.png") no-repeat;background-size:contain;background-position:center;
+    }
+    .ani{-webkit-transition:-webkit-transform 2.5s ease-out;transition:transform 2.5s ease-out;-webkit-transform-origin:0.853333rem 1.626667rem;transform-origin:50% 50%;}
+    .btn-lottery{width:1.693333rem;height:2.466667rem;display:block;position:absolute;top:3.87rem;left:50%;margin-left:-0.853333rem;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_arrow.png") no-repeat;background-size:contain;background-position:center;z-index: 20;}
+    .desk-times{font-size:0.42rem;color:#5e0808;padding-top:0.326667rem;text-align:center;width:100%;position:absolute;top:0;left:0;font-weight:bold;}
+    .myprize{width:3.626667rem;height:1.013333rem;margin:0 auto 0.133333rem;background-color:#fff799;font-size:0.426667rem;color:#e94420;line-height:1.013333rem;text-align:center;border-radius:0.266667rem;position:relative;}
+    .myprize:before,.myprize:after{content:'';width:0.186667rem;height:0.44rem;background-repeat:no-repeat;background-size:100%;background-position:center;position:absolute;z-index:2;bottom:-0.25rem;}
+    .myprize:before{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/c_ico-l.png");left:0.2rem;}
+    .myprize:after{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/c_ico-r.png");right:0.2rem;}
+    .box{width:9.146667rem;height:auto;position:relative;border-radius:0.266667rem;margin:0 auto 0.4rem;background-color:#fdf4e2;padding:0.48rem 0 0.213333rem;}
+    .box:before,.box:after{content:'';width:0;height:0;position:absolute;}
+    .box:before{top:0;left:0;border-left:0.453333rem solid #ffd451;border-top:0.453333rem solid #ffd451;border-right:0.453333rem solid transparent;border-bottom:0.453333rem solid transparent;border-radius:0.266667rem 0 0 0;}
+    .box:after{top:0;right:0;border-left:0.453333rem solid transparent;border-top:0.453333rem solid #ffd451;border-right:0.453333rem solid #ffd451;border-bottom:0.453333rem solid transparent;border-radius:0 0.266667rem 0 0;}
+    .box li{height:2.426667rem;margin:0 0 0.293333rem 0.746667rem;position:relative;overflow:hidden;display:block;font-size:0;}
+    .box li.box-none{font-size:0.426667rem;color:#e94420;line-height:2.426667rem;text-align:center;margin-left:0;}
+    .pimg{width:3.28rem;height:2.453333rem;border-radius:0.266667rem;background-repeat:no-repeat;background-position:center;display:inline-block;vertical-align:top;background-color:#fde7b7;}
+    .pimg.quan{background-color:rgba(253,231,183,.38);background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_p-quan1_2.png");background-size:2.68rem 1.12rem;}
+    .pimg.xbl{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_p-xbl1.png");background-size:1.32rem 2.04rem;}
+    .pimg.lmm{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_p-lmm1.png");background-size:1.853333rem 2.133333rem;}
+    .pimg.clqy{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_p-clqy1.png");background-size:1.866667rem 1.746667rem;}
+    .pimg.hdmx{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_p-hdmx1.png");background-size:1.88rem 1.786667rem;}
+    .pimg.wj{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_p-wj1.png");background-size:2.48rem 1.853333rem;}
+    .pimg.fxq{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_p-fxq1.png");background-size:1.92rem 1.853333rem;}
+    .pimg.lb{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_p-libao1.png");background-size:1.92rem 1.48rem;}
+    .pcnt{display:inline-block;vertical-align:top;margin-left:0.88rem;}
+    .pname{font-size:0.426667rem;color:#ef6716;line-height:0.666667rem;padding-top:0.32rem;max-width:4rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-indent:0.2rem;}
+    .pbtn{width:2.666667rem;height:0.973333rem;display:block;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_ico-btn.png") no-repeat;background-size:contain;background-position:center;font-size:0.373333rem;color:#fff;line-height:0.973333rem;text-align:center;}
+  </style>
+  <style>
+    .pop{position:fixed;width:100%;height:100%;background-color:rgba(0,0,0,.7);z-index:88;top:0;left:0;}
+    .pop.hide{visibility:hidden;}
+    .pop2{position: absolute;width: 100%;height: 100%;top: 0;left: 0;background-color: #000;}
+    .pop-box{width:8.453333rem;height:10.493333rem;background-color:#fdf4e2;border-radius:0.266667rem;position:absolute;top:50%;left:50%;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_pop-bg.png") no-repeat;background-position:center;background-size:contain;-webkit-transform:translate3d(-50%,-50%,0);transform:translate3d(-50%,-50%,0);font-size:0;}
+    .pop-close{width:1.186667rem;height:1.186667rem;display:block;position:absolute;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/c_ico-close.png") no-repeat;background-position:center;background-size:contain;top:-1rem;right:0;}
+    .pop-title{font-size:0.48rem;color:#f35f4a;line-height:1.44rem;text-align:center;padding-top:0.8rem;}
+    .pop-name{font-size:0.453333rem;color:#f35f4a;line-height:1.093333rem;text-align:center;}
+    .pop-img{display:block;margin:0 auto;width:auto;height:4.6rem;background-repeat:no-repeat;background-position:center;}
+    .pop-img.xbl{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_p-xbl2.png");background-size:3.013333rem 4.56rem;}
+    .pop-img.lmm{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_p-lmm2.png");background-size:3.946667rem 4.4rem;}
+    .pop-img.clqy{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_p-clqy2.png");background-size:4.186667rem 3.906667rem;}
+    .pop-img.hdmx{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_p-hdmx2.png");background-size:4.613333rem 4.426667rem;}
+    .pop-img.wj{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_p-wj2.png");background-size:5.613333rem 4.2rem;}
+    .pop-img.fxq{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_p-fxq2.png");background-size:4.613333rem 4.426667rem;}
+    .pop-img.quan{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_p-quan2_2.png");background-size:4.52rem 2.266667rem;}
+    .pop-img.lb{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_p-libao2.png");background-size:4.52rem 3.493333rem;}
+    .pop-btn{width:6.933333rem;height:1.333333rem;display:block;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_pop-btn.png") no-repeat;background-size:contain;background-position:center;margin:0.373333rem auto 0;font-size:0.426667rem;text-align:center;color:#fff;line-height:1.333333rem;}
+    .pop-img-img{display:block;margin:0 auto;width:3.813333rem;height:3.813333rem;margin:0.3rem auto;}
+    .pop-dec{font-size:0.453333rem;color:#f35f4a;line-height:1.093333rem;text-align:center;}
+    .pop-dec em{font-style:normal;color:#b71e09;}
+    
+    .clock-box{width:100%;height:3.973333rem;background-color:#fdf4e2;position:fixed;top:0;left:0;background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_record-bg.png");background-repeat:no-repeat;background-position:bottom center;background-size:100% auto;}
+    .c-list{display:block;font-size:0;text-align:center;margin-top:0.586667rem;}
+    .c-li{display:inline-block;width:0.986667rem;height:1.733333rem;margin:0 0.186667rem 0;vertical-align:top;}
+    .c-title{font-size:0.32rem;line-height:0.506667rem;color:#4b4943;}
+    .c-c{width:0.986667rem;height:0.986667rem;border-radius:50%;display:block;font-size:0.293333rem;color:#000;text-align:center;line-height:0.986667rem;margin-top:0.1rem;background-color:#feec74;background-repeat:no-repeat;background-position:center;}
+    .miss .c-c{background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAgCAMAAACrZuH4AAAAP1BMVEUAAADmABLmABLmABLmABLmABLmABLmABLmABLmABLmABLmABLmABLmABLmABLmABLmABLmABLmABLmABLmABIDzUeoAAAAFHRSTlMAfXYVEd0gHM3g0NbUg3iIF+yvinhfnsgAAACoSURBVDjLfcxZDoMwDEVRU8I8U+9/raVPSqL0Qu+XEx/Z1FIZa8+Q5sW9Ihi8DxlchMAj2dxFCEQESNrGPZGXk3QR+BisIAS1GQgACABIBrMAyBsABOCJTAJFawl2YysA2hI47sE+eWp9An9JLUCSwax/EoIjkdc9aLqK5AJjBmY/hAAEgCSUgCT08TG02oJIJECy6QiASAQiEYAs30lEgERA5BQAEfgAJM0kXtVTFXEAAAAASUVORK5CYII=");background-size: 0.44rem 0.426667rem;}
+    .complete .c-c{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAgBAMAAACbaIdJAAAAG1BMVEUAAAAysWwysWwysWwysWwysWwysWwysWwysWxmTD9AAAAACHRSTlMAfHl/doW7ifF/qTUAAACSSURBVCjPtdKrDsJAEIXh5eaRyErkJphKJBKJx/AIWAqE/7FJm6aHE47tqN3JN5vM7JQQh5JixTmlW94hu4DEd8AnYl4Rc5wTe69L4Q11Su/7dDMcLzwMdyOG7T++w8AdlxMjN1zW9NywePNbJ96pzLlhvSlsvd0mbFzY5iasKQsHXuOnPPNy1LB3whatsPGrXb9HTGNqBbXc9gAAAABJRU5ErkJggg==");background-size: 0.586667rem 0.426667rem;}
+    .clock-close{width:1.186667rem;height:1.186667rem;display:block;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/c_ico-close.png") no-repeat;background-position:center;background-size:contain;position:fixed;top:4.373333rem;left:50%;margin-left:-0.6rem;}
+    
+    .pop-card{width:7.546667rem;height:3.546667rem;display:block;overflow:hidden;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_card.png") no-repeat;background-size:contain;background-position:center;position:relative;margin:0 auto 0.2rem;}
+    .pop-card:nth-last-child(2){margin-top:0.2rem;}
+    .pc-name{font-size:0.373333rem;color:#783e1b;line-height:1.226667rem;text-indent:1.813333rem;}
+    .pc-new{color:#ef1d00;line-height:1.3;font-size:0.666667rem;display:inline-block;vertical-align:bottom;text-indent:1.813333rem;font-weight:bold;}
+    .pc-new em{font-style:normal;font-size:0.346667rem;}
+    .pc-old{color:rgba(239,29,0,.58);text-decoration:line-through;font-size:0.666667rem;line-height:1.3;display:inline-block;vertical-align:bottom;margin-left:0.266667rem;}
+    .pc-old em{font-style:normal;font-size:0.32rem;}
+    .pc-btn{width:2.666667rem;height:0.973333rem;display:block;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_ico-btn.png") no-repeat;background-size:contain;background-position:center;font-size:0.373333rem;color:#fff;text-align:center;line-height:0.973333rem;position:absolute;right:0.266667rem;bottom:0.266667rem;}
+
+    .p-box{width:8.453333rem;height:6.866667rem;background-color:#fdf4e2;border-radius:0.266667rem;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/c_popbg.png") no-repeat;background-position:center;background-size:contain;font-size:0;position: relative;margin: 1.5rem auto 0;}
+    .close{width:1.186667rem;height:1.186667rem;display:block;position:absolute;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/c_ico-close.png") no-repeat;background-position:center;background-size:contain;top:-1rem;right:0;}
+    .p-title{font-size:0.48rem;color:#f35f4a;text-align:center;line-height:1.44rem;padding-top:0.746667rem;}
+    .input-box{width:6.666667rem;overflow:hidden;margin:0.56rem auto 0.5rem;position:relative;}
+    input{outline:none;border:none;outline:none;border:none;text-indent:0.1rem;background-color:transparent;padding: 0;}
+    .p-input1{width:100%;border-bottom:1px solid #e08a46;font-size:0.48rem;display:block;margin-bottom:0.4rem;line-height:1.3; }
+    .p-input2{width:4.186667rem;border-bottom:1px solid #e08a46;display:inline-block;vertical-align:bottom;font-size:0.48rem;line-height: 1.3;}
+    .p-yzmbtn{width:auto;height:0.773333rem;line-height:0.773333rem;padding:0 0.293333rem;border:1px solid #e08a46;border-radius:0.266667rem;display:inline-block;vertical-align:bottom;font-size:0.32rem;color:#ef6716;position:absolute;right:0;bottom:0;}
+    .p-yzmbtn.disable{color:#aaa;}
+    .p-submit{width:6.933333rem;height:1.333333rem;display:block;margin:0 auto 0;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/c-submit.png") no-repeat;background-size:contain;background-position:center;}
+    .pop.hide{visibility:hidden;}
+
+    .toast{position:fixed;bottom:2rem;left:0;width:100%;text-align:center;font-size:0;z-index:99;}
+    .toast-p{background-color:rgba(0,0,0,.75);color:#fff;font-size:0.4rem;padding:0.2rem 0.4rem;border-radius:0.133333rem;display:inline-block;}
+    @media screen and (min-device-width:760px){
+      /* ipad  */
+      .desk{margin-top:6.4rem;}
+    }
+    @media screen and (min-device-width:1020px){
+      /* ipad pro */
+      .desk{margin-top:9.4rem;}
+    }
+    .activity-over{width: 100%;height: 100%;width: 100vw;height: 100vh;position: fixed;z-index: 999;background-color: rgba(0,0,0,0.8);top: 0;left: 0;}
+    .activity-over p{font-size: 16px;text-align: center;color: #fff;font-weight: 500;position: absolute;top: 50%;left: 50%;transform: translate3d(-50%,-50%,0);-webkit-transform: translate3d(-50%,-50%,0);}
+    .landscapescreen{width: 100%;height:100%;width: 100vw;height: 100vh;color: #fff;background-color: #008c8c;font-size: 22px;text-align: center;display: none;z-index: 999999;position: fixed;line-height:100%;top: 0;left: 0;}
+    .landscapescreen span{top: 50%;position: absolute;left: 20%;right: 20%;display: none;}
+    @media screen and (orientation: landscape){.landscapescreen,.landscapescreen span{display: block;}}
+  </style>
+</head>
+<body>
+  <div id="landscapescreen" class="landscapescreen"><span>为了更好的体验，请使用竖屏浏览</span></div>
+  <div class="container">
+    <input type="text" class="p-input1">
+    <input type="text" class="p-input1">
+    <input type="text" class="p-input1">
+    <input type="text" class="p-input1">
+    <input type="text" class="p-input1">
+    <input type="text" class="p-input1">
+    <a class="record"></a>
+    <div class="desk">
+      <p class="desk-times">0</p>
+      <span class="ani btn-pan" data-deg=""></span>
+      <span class="btn-lottery"></span>
+    </div>
+    <div class="myprize">我的奖品</div>
+    <ul class="box">
+      <li class="box-none">
+        <p>您还没有奖品哦~去抽奖吧</p>
+      </li>
+    </ul>
+  </div>
+  <div class="pop clock" style="display: none;">
+    <div class="clock-box">
+      <ul class="c-list">
+        <li class="c-li complete">
+          <p class="c-title">D1</p>
+          <span class="c-c"></span>
+        </li>
+        <li class="c-li complete">
+          <p class="c-title">D2</p>
+          <span class="c-c"></span>
+        </li>
+        <li class="c-li complete">
+          <p class="c-title">D3</p>
+          <span class="c-c"></span>
+        </li>
+        <li class="c-li complete">
+          <p class="c-title">D4</p>
+          <span class="c-c"></span>
+        </li>
+        <li class="c-li miss">
+          <p class="c-title">D5</p>
+          <span class="c-c"></span>
+        </li>
+        <li class="c-li miss">
+          <p class="c-title">D6</p>
+          <span class="c-c"></span>
+        </li>
+        <li class="c-li miss">
+          <p class="c-title">D7</p>
+          <span class="c-c"></span>
+        </li>
+      </ul>
+    </div>
+    <span class="clock-close"></span>
+  </div>
+  <div class="pop qq" style="display: none;">
+    <div class="pop-box">
+      <div class="pop-close"></div>
+      <h3 class="pop-title">优惠课程</h3>
+      <div class="pop-card">
+        <p class="pc-name">【小伴龙Live】 情景对话课</p>
+        <p class="pc-new"><em>￥</em>958</p><p class="pc-old"><em>￥1998</em></p>
+        <a href="" class="pc-btn">马上购买</a>
+      </div>
+      <div class="pop-card">
+        <p class="pc-name">【小伴龙Live】 情景对话课</p>
+        <p class="pc-new"><em>￥</em>958</p><p class="pc-old"><em>￥1998</em></p>
+        <a href="" class="pc-btn">马上购买</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 小伴龙公仔 -->
+  <div class="pop ppxbl" style="display: none;">
+    <div class="pop-box">
+      <div class="pop-close"></div>
+      <h3 class="pop-title">恭喜您获得</h3>
+      <p class="pop-name">S版小伴龙公仔</p>
+      <div class="pop-img xbl"></div>
+      <a href="" class="pop-btn">马上领取</a>
+    </div>
+  </div>
+  <!-- 龙妹妹 -->
+  <div class="pop pplmm" style="display: none;">
+    <div class="pop-box">
+      <div class="pop-close"></div>
+      <h3 class="pop-title">恭喜您获得</h3>
+      <p class="pop-name">S版龙妹妹公仔</p>
+      <div class="pop-img lmm"></div>
+      <a href="" class="pop-btn">马上领取</a>
+    </div>
+  </div>
+  <!-- 拼图 丛林奇遇 -->
+  <div class="pop ppclqy" style="display: none;">
+    <div class="pop-box">
+      <div class="pop-close"></div>
+      <h3 class="pop-title">恭喜您获得</h3>
+      <p class="pop-name">《丛林奇遇》拼图</p>
+      <div class="pop-img clqy"></div>
+      <a href="" class="pop-btn">马上领取</a>
+    </div>
+  </div>
+  <!-- 海底冒险 -->
+  <div class="pop pphdmx" style="display: none;">
+    <div class="pop-box">
+      <div class="pop-close"></div>
+      <h3 class="pop-title">恭喜您获得</h3>
+      <p class="pop-name">《海底冒险》拼图</p>
+      <div class="pop-img hdmx"></div>
+      <a href="" class="pop-btn">马上领取</a>
+    </div>
+  </div>
+  <!-- 文具 -->
+  <div class="pop ppwj" style="display: none;">
+    <div class="pop-box">
+      <div class="pop-close"></div>
+      <h3 class="pop-title">恭喜您获得</h3>
+      <p class="pop-name">文具套装</p>
+      <div class="pop-img wj"></div>
+      <a href="" class="pop-btn">马上领取</a>
+    </div>
+  </div>
+  <!-- 飞行棋 -->
+  <div class="pop ppfxq" style="display: none;">
+    <div class="pop-box">
+      <div class="pop-close"></div>
+      <h3 class="pop-title">恭喜您获得</h3>
+      <p class="pop-name">飞行棋</p>
+      <div class="pop-img fxq"></div>
+      <a href="" class="pop-btn">马上领取</a>
+    </div>
+  </div>
+  <!-- 大礼包 -->
+  <div class="pop pplb" style="display: none;">
+    <div class="pop-box">
+      <div class="pop-close"></div>
+      <h3 class="pop-title">恭喜您获得</h3>
+      <p class="pop-name">资源大礼包</p>
+      <div class="pop-img lb"></div>
+      <a class="pop-btn lbBtn">马上领取</a>
+    </div>
+  </div>
+  <!-- 优惠券 -->
+  <div class="pop ppquan" style="display: none;">
+    <div class="pop-box">
+      <div class="pop-close"></div>
+      <h3 class="pop-title">恭喜您获得</h3>
+      <p class="pop-name">优惠券</p>
+      <div class="pop-img quan"></div>
+      <a class="pop-btn quanBtn">马上使用</a>
+    </div>
+  </div>
+  <div class="pop pplbcode" style="display: none;">
+    <div class="pop-box">
+      <div class="pop-close"></div>
+      <h3 class="pop-title">恭喜您获得</h3>
+      <p class="pop-name">学习资源大礼包</p>
+      <img src="//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/l_zyqrcode.png" alt="公众号二维码" class="pop-img-img">
+      <p class="pop-dec">关注公众号回复“<em>1098</em>”领取</p>
+    </div>
+  </div>
+
+  <div class="pop hide yzphone">
+    <div class="p-box">
+      <div class="close"></div>
+      <h3 class="p-title">小伴龙Lixxve身份验证</h3>
+      <div class="input-box">
+        <input type="number" class="p-input1 i-phone" placeholder="请输入注册手机号" autofocus>
+        <input type="text" class="p-input2 i-yzm" placeholder="请输入验证码">
+        <a class="p-yzmbtn">获取验证码</a>
+      </div>
+      <a class="p-submit"></a>
+    </div>
+  </div>
+
+  <div class="toast" style="display: none;">
+    <p class="toast-p">已发送短信至您的手机</p>
+  </div>
+  <div id="acOver" class="activity-over" style="display: none;">
+    <p>活动已结束，谢谢关注</p>
+  </div>
+
+  <script src="/js/zepto.min-fade.js"></script>
+  <script src="//res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+  <script src="/js/vconsole.min.js"></script>
+  <script>
+    var landscapescreen = document.getElementById('landscapescreen');
+    landscapescreen.addEventListener('click', function(e){e.preventDefault();}, false);
+    landscapescreen.addEventListener('touchmove', function(e){e.preventDefault();}, false);
+    var toastST;
+    window.onresize = function(e){
+      console.log(e);
+      return false;
+    }
+    // window.screen.lockOrientation(["portrait-primary","portrait-secondary"]);
+    
+
+    function toast(str){
+      toastST&&clearTimeout(toastST);
+      if(str&&str!=''){
+        $('.toast').fadeIn();
+        $('.toast-p').text(str);
+        toastST = setTimeout(function(){
+          $('.toast').fadeOut();
+        }, 1200);
+      }else{
+      }
+    }
+
+    $('.pop-close').on('click', function(e){
+      $(this).parent().parent().hide();
+      return false;
+    });
+    $('.clock-close').on('click', function(e){
+      $(this).parent().hide();
+      return false;
+    });
+    
+    var ISOVER = 0;var needLogin = 1;
+    var OVER = document.getElementById('acOver');
+    OVER.addEventListener('click', function(e){e.preventDefault();}, false);
+    OVER.addEventListener('touchmove', function(e){e.preventDefault();}, false);
+
+    var GameReady = true; //数据初始化标志
+    $(document).on('touchstart click', function(e){
+      var sign = false;
+      if(!GameReady){
+        e.preventDefault();
+        sign = false;
+      }else{
+        sign = true;
+      }
+      return sign;
+    });
+    var ajaxErrorCount = 0;
+    var CHANCE = 0;  //是否有资格抽奖
+    var PrizeList = [];
+
+    var XBL = 100,
+        LMM = 101,
+        HDMX = 102,
+        CLQY = 103,
+        FXQ = 104,
+        WJ = 105,
+        QUAN = 0,
+        LB = -1;
+
+    function addPrizeToBox(id){
+      $('.box-none').hide();
+      
+      function htext(word, name, url){
+        var xx = (word==="quan"?"马上领取":"马上使用");
+        var html = "";
+        if(word==='quan' || word==='lb'){
+          html = '<li>'+
+                    '<div class="pimg '+word+'"></div>'+
+                    '<div class="pcnt">'+
+                      '<p class="pname">'+name+'</p>'+
+                      '<a class="pbtn '+word+'Btn">'+xx+'</a>'+
+                    '</div>'+
+                  '</li>';
+        }else{
+          html = '<li>'+
+                    '<div class="pimg '+word+'"></div>'+
+                    '<div class="pcnt">'+
+                      '<p class="pname">'+name+'</p>'+
+                      '<a href="'+url+'" class="pbtn">'+xx+'</a>'+
+                    '</div>'+
+                  '</li>';
+        }
+        return html;
+      }
+      var htmltext = "";
+      switch(id){
+        case XBL:
+          htmltext += htext('xbl', 'S版小伴龙公仔', "/xxx/xx?");
+          break;
+        case LMM:
+          htmltext += htext('lmm', 'S版龙妹妹公仔', "/xxx/xx?");
+          break;
+        case HDMX:
+          htmltext += htext('hdmx', '海底冒险拼图', "/xxx/xx?");
+          break;
+        case CLQY:
+          htmltext += htext('clqy', '丛林奇遇拼图', "/xxx/xx?");
+          break;
+        case FXQ:
+          htmltext += htext('fxq', '飞行棋', "/xxx/xx?");
+          break;
+        case WJ:
+          htmltext += htext('wj', '文具套装', "/xxx/xx?");
+          break;
+        case QUAN:
+          htmltext += htext('quan', '优惠券', "/xxx/xx?");
+          break;
+        case LB:
+          htmltext += htext('lb', '资源大礼包', "/xxx/xx?");
+          break;
+        default:
+          break;
+      }
+      $('.box')[0].innerHTML += htmltext;
+    }
+
+    function htmlWriteData(){
+      if(PrizeList.length>0){
+        for(var i=0; i<PrizeList.length; i++){
+          addPrizeToBox(PrizeList[i].prizeId);
+        }
+        document.body.scrollTop = document.body.clientHeight;
+      }else{
+      }
+      var c = CHANCE || 0;
+      $('.desk-times').text(c);
+      GameReady = true;
+    }
+
+    function init(){
+      $.ajax({
+        type: 'GET',
+        url: '/api/holiday/turntable20170728/index.json',  //TODO接口
+        data: "",
+        cache: false,
+        dataType: 'json',
+        success: function(data){
+          if (data.rc==0) {
+
+            CHANCE = data.chance;
+            PrizeList = data.prizeIds
+            htmlWriteData();
+          }else{
+            console.log('初始化error');
+          }
+        },
+        error: function(){
+          ajaxErrorCount++;
+          if(ajaxErrorCount>=4){
+            toast('请检查网络连接,刷新页面重试');
+          }else{
+            setTimeout(function(){
+              init();
+            }, 800*ajaxErrorCount);
+          }
+        }
+      });
+    }
+
+    if(ISOVER){
+      OVER.style.display = 'block';
+    }else{
+      init();
+    }
+
+    var currentShot = -2;
+
+    function showPrizePop(id){
+      switch(id){
+        case XBL:
+          $('.ppxbl').show();
+          break;
+        case LMM:
+          $('.pplmm').show();
+          break;
+        case HDMX:
+          $('.pphdmx').show();
+          break;
+        case CLQY:
+          $('.ppclqy').show();
+          break;
+        case FXQ:
+          $('.ppfxq').show();
+          break;
+        case WJ:
+          $('.ppwj').show();
+          break;
+        case QUAN:
+          $('.ppquan').show();
+          break;
+        case LB:
+          $('.pplb').show();
+          break;
+        default:
+          $('.pplb').show();
+          break;
+      }
+    }
+
+    // 转盘
+    function rotateUI(id){
+      var _deg = $('.btn-pan').attr('data-deg');
+      var deg;
+      if(_deg&&_deg!==""){
+        _deg = parseInt(_deg, 10);
+        deg = _deg+(360 - (_deg%360));
+      }else{
+        _deg = 0;
+        deg = _deg;
+      }
+      switch(id){
+        case XBL:
+          deg+=(1057.5+360);
+          break;
+        case LMM:
+          deg+=(832.5+360);
+          break;
+        case HDMX:
+          deg+=(967.5+360);
+          break;
+        case CLQY:
+          deg+=(877.5+360);
+          break;
+        case FXQ:
+          deg+=(787.5+360);
+          break;
+        case WJ:
+          deg+=(1012.5+360);
+          break;
+        case QUAN:
+          deg += (742.5+360);
+          break;
+        case LB:
+          deg += (922.5+360);
+          break;
+      }
+      $('.btn-pan').css({'-webkit-transform': 'rotate(' + (deg) + 'deg)',
+        'transform': 'rotate(' + (deg) + 'deg)'}).attr('data-deg', deg);
+    }
+
+    /* From Modernizr */
+    function whichTransitionEvent(){
+      var t;
+      var el = document.createElement('fakeelement');
+      var transitions = {
+        'transition':'transitionend',
+        // 'OTransition':'oTransitionEnd',
+        // 'MozTransition':'transitionend',
+        'WebkitTransition':'webkitTransitionEnd'
+      }
+      for(t in transitions){
+        if( el.style[t] !== undefined ){
+          return transitions[t];
+        }
+      }
+    }
+    /* Listen for a transition! */
+    var shotDOM = $('.btn-pan')[0];
+    var transitionEvent = whichTransitionEvent();
+    transitionEvent && shotDOM.addEventListener(transitionEvent, function(){
+      if(currentShot!==-2){
+        showPrizePop(currentShot);
+        addPrizeToBox(currentShot);
+        currentShot = -2;
+      }else{
+        console.log('未正确返回奖品数据');
+      }
+    });
+
+
+    function sendAjaxLottery() {
+      $.ajax({
+        type: 'POST',
+        url: '/api/holiday/turntable20170728/lottery.json',  //TODO 接口
+        data: '',
+        dataType: 'json',
+        timeout: 20000,
+        success: function(data){
+          if (data.rc==0) {
+            var id = data.res.FprizeId;
+            id = parseInt(id, 10);
+            currentShot = id;
+            rotateUI(id);
+          }else{
+            console.log('未正确返回抽奖数据');
+          }
+          btnTimer = 0;
+        },
+        complete:function(a,b){
+          if(b=="timeout"){
+            //alert("网络连接超时，请检查网络");
+            PopMsg('网络连接超时，请检查网络', false, '');
+          }
+        },
+        error: function(e){
+          //alert('网络连接失败，请检查网络');
+          PopMsg('网络连接失败，请检查网络', false, '');
+        }
+      });
+    }
+
+    var btnTimer = 0;
+    $('.btn-lottery').on('click', function(e){
+      if(btnTimer!==0){
+        return false;
+      }
+
+      btnTimer = 1;
+      if(CHANCE===0){
+        toast('没有机会了');
+        btnTimer=0;
+      }else{
+        CHANCE--;
+        $('.desk-times').text(CHANCE);
+        sendAjaxLottery();
+      }
+      return false;
+    });
+    
+    $('.record').on('click', function(){
+      $('.clock').show();
+      return false;
+    });
+    
+    $('.pop').on('click', '.quanBtn', function(e){
+      $(this).parent().parent().hide();
+      $('.qq').show();
+      return false;
+    });
+    $('.pop').on('click', '.lbBtn', function(e){
+      $(this).parent().parent().hide();
+      $('.pplbcode').show();
+      return false;
+    });
+    $('.box').on('click', '.quanBtn', function(e){
+      $('.qq').show();
+      return false;
+    });
+    $('.box').on('click', '.lbBtn', function(e){
+      $('.pplbcode').show();
+      return false;
+    });
+
+  </script>
+  <script>
+    $('.close').on('click', function(){
+      $('.yzphone').addClass('hide');
+      return false;
+    });
+
+
+    var yzmclick=0;
+    $('.p-yzmbtn').on('click', function(e){
+      var $that = $(this);
+      if($that.hasClass('disable')||yzmclick===1){
+        return false;
+      }
+      yzmclick=1;
+      setTimeout(function(){
+        yzmclick = 0;
+      }, 1200);
+      checkPhoneNumber();
+      return false;
+    });
+
+    var cd = 60;
+    function countDown(){
+      var $dom = $('.p-yzmbtn');
+      setTimeout(function(){
+        if(cd>1){
+          cd = cd - 1;
+          $dom.text((cd-1)+'秒重试');
+          countDown();
+        }else{
+          $dom.text('获取验证码');
+          $dom.removeClass('disable');
+          cd = 60;
+        }
+      }, 1000);
+    }
+    function checkPhoneNumber(){
+      var pp = $('.i-phone').val().trim();
+      if(pp==''){
+        toast('请正确填写您的手机号');
+        return;
+      }
+      if(!(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(pp))){ 
+        toast('请正确填写您的手机号');
+        return; 
+      } 
+      $.ajax({
+        url: "/api/fenxiao/vcode.json", //TODO 修改接口
+        type: "POST",
+        data: "phone="+pp,
+        dataType: "json",
+        cache: false,
+        success: function(data){
+          if(data.rc==0){
+            $('.p-yzmbtn').addClass('disable').text('60秒后重试');
+            countDown();
+          }else{
+            toast(data.msg);
+          }
+        },
+        fail: function(e){
+          console.log('校验失败');
+          toast(e);
+        }
+      });
+    }
+    function checkCode(){
+      var pp = $('.i-phone').val().trim() || '';
+      var code = $('.i-yzm').val().trim() || '';
+      if(pp==''||code==''){
+        toast('请先完成手机验证');
+        return;
+      }
+      if(!(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(pp))){ 
+        toast('请正确填写您的手机号');
+        return;
+      }
+
+      $.ajax({
+        url: "/api/fenxiao/register.json",  // TODO 修改接口
+        type: "POST",
+        data: "phone="+pp+"&vcode="+code,
+        dataType: "json",
+        cache: false,
+        success: function(data){
+          if(data.rc==0){
+            toast('登录成功');
+            setTimeout(() => {
+              window.location.href = '/'; 
+            }, 1000);
+          }else{
+            toast(data.msg);
+          }
+        },
+      });
+    }
+    
+    var _clickflag = 0;
+    $('.p-submit').on('click', function(e){
+      if(_clickflag==1){
+        return;
+      }
+      _clickflag = 1;
+      setTimeout(function(){
+        _clickflag = 0;
+      }, 1200);
+      checkCode();
+      return false;
+    });
+  </script>
+  <script>
+    var SH_DataObj = {
+      img : "//udata.youban.com/webimg/weixin/newyear2018/share-ico.png",
+      title : "小伴龙10万新春礼包大派送！",
+      dec: "人人有份，最高888元。你也快来参加吧！",
+      fullURL: ""+window.location.href,
+      host: ""+window.location.host,
+      shortURL: ""+window.location.href.split("?")[0],
+      protocol: ""+document.location.protocol,
+      userName: '',
+      avatar: '',
+      canShare: false,
+    };
+   
+    if(SH_DataObj.protocol==='http' || SH_DataObj.protocol==='https'){
+    }else{
+      SH_DataObj.protocol = 'http';
+    }
+    SH_DataObj.img = SH_DataObj.protocol + ":" + SH_DataObj.img;//在WXSHDATA中图片地址要带协议http/https
+
+    function Wx_shareWhere(){
+      $.get('/common/record.json?childrenday=childrenday_index_share_success',{}, function(data){});
+    }
+
+    var WXSHDATA = {
+      title: SH_DataObj.title,
+      link: encodeURI(SH_DataObj.shortURL),
+      imgUrl: SH_DataObj.img,
+      type: "link",
+      dataUrl: "",
+      desc: SH_DataObj.dec,
+      success: function() {
+        //Wx_shareWhere();
+      },
+      cancel: function(){}
+    };
+    
+    function WxDo(uflag){
+      //分享
+      $.post('/weixin/config', {
+        url: SH_DataObj.fullURL,
+      }, function(data) {
+        data = JSON.parse( data );
+        //console.log(data);
+        var apilist = [
+          'onMenuShareTimeline',
+          'onMenuShareAppMessage',
+          'showOptionMenu',
+          'hideOptionMenu',
+          'hideMenuItems'
+        ];
+        wx.config({
+          debug: false,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: apilist
+        });
+        wx.error(function(res) {
+          console.log(JSON.stringify(res));
+        });
+        wx.ready(function() {
+          if(uflag){
+            wx.onMenuShareAppMessage(WXSHDATA);
+            wx.onMenuShareTimeline(WXSHDATA); //朋友圈
+          }else{
+            wx.hideMenuItems({
+              menuList: [
+                "menuItem:share:appMessage",
+                "menuItem:share:timeline",
+                "menuItem:share:qq",
+                "menuItem:share:weiboApp",
+                "menuItem:favorite",
+                "menuItem:share:facebook",
+                "menuItem:share:QZone",
+                "menuItem:editTag",
+                "menuItem:delete",
+                "menuItem:copyUrl",
+                "menuItem:originPage",
+                "menuItem:readMode",
+                "menuItem:openWithQQBrowser",
+                "menuItem:openWithSafari",
+                "menuItem:share:email",
+              ] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮
+            });
+          }
+        });
+      });
+    }
+    WxDo(SH_DataObj.canShare);
+  </script>
+</body>
+</html>

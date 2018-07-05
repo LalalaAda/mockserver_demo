@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>打卡</title>
+  <style>
+    html * {outline: 0;-webkit-text-size-adjust: none;-webkit-tap-highlight-color: rgba(0,0,0,0);}
+    html,body{-moz-osx-font-smoothing: grayscale;-webkit-font-smoothing: antialiased;-webkit-text-size-adjust: 100%;text-size-adjust:100%;}
+    body{overflow-x: hidden;width:100%;width: 100vw;margin: 0;padding: 0;}
+    input,button{outline: 0;}
+    a{text-decoration: none;-webkit-tap-highlight-color: transparent;}
+    .clearfix{*zoom: 1;/* ie 6/7 */}
+    .clearfix:before, .clearfix:after{ content: " ";display: table; }
+    .clearfix:after{clear: both;}
+    h1,h2,h3,h4,h5,h6,p,ul,li{margin: 0;padding: 0;}
+    ul,li{list-style: none;}
+    img{vertical-align: middle;}
+    input[type="submit"],input[type="reset"],input[type="button"],button {-webkit-appearance: none;}
+    .fl{float: left;} .fr{float: right;}
+    .font-ellipsis{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+    .fcolor_grey{color: #999;}
+    .fjustify{text-align: justify;}
+  </style>
+  <script>
+    !function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/10;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var q=a.devicePixelRatio,u=q.toString().match(/^[1-9]\d*$/g);i=u?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));
+  </script>
+  <style>
+    body{background-color:#f46333;background-image:-webkit-linear-gradient(270deg,#e94320 0%,#f76d39 70%);min-height:100vh;}
+    .container{background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/c_bg.png") no-repeat;background-size:100% auto;background-position:top center;min-height:100vh;overflow:hidden;}
+    .cnt{margin:4.533333rem auto 0;overflow:hidden;display:block;}
+    .cnt li{width:8.906667rem;height:1.2rem;-webkit-box-shadow:0 2px 5px rgba(0,0,0,.06);box-shadow:0 2px 5px rgba(0,0,0,.06);margin:0 auto 0.133333rem;position:relative;display:block;background-color:#fdf4e2;border-radius:0.266667rem;}
+    .cnt li.unlock{background-color:#fff799;}
+    .cnt li a{display:block;width:100%;height:100%;margin:0 auto;text-align:center;font-size:0.426667rem;color:#ef6716;line-height:1.2rem;}
+    .cnt li.final a{color:#c62f10;font-weight:bold;}
+    .cnt li:before,.cnt li:after{content:'';width:0.186667rem;height:0.44rem;background-repeat:no-repeat;background-size:100%;background-position:center;position:absolute;z-index:2;bottom:-0.25rem;}
+    .cnt li:before{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/c_ico-l.png");left:0.2rem;}
+    .cnt li:after{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/c_ico-r.png");right:0.2rem;}
+    .cnt li:nth-last-child(1){margin-bottom:0.4rem;}
+    .cnt li:nth-last-child(1):before,.cnt li:nth-last-child(1):after{content:unset;}
+    .day:before{content:"";display:block;position:absolute;width:0;height:0;border-left:0.48rem solid #ffd451;border-top:0.48rem solid #ffd451;border-right:0.48rem solid transparent;border-bottom:0.48rem solid transparent;border-radius:0.266667rem 0 0 0;top:0;left:0;}
+    .day:after{content:attr(data-i);font-size:0.426667rem;color:#ef6716;line-height:1.5;width:1.066667rem;height:1.066667rem;position:absolute;top:0;left:0;text-align:left;text-indent:0.1rem;}
+    .ico{width:1.386667rem;height:1.2rem;display:block;position:absolute;top:0;right:0;background-repeat:no-repeat;background-position:center;border-radius:0 0 0.266667rem 0;overflow:hidden;}
+    .lock .ico{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/c_ico-lock.png");background-size:0.413333rem 0.4rem;}
+    .final .ico{background-image:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/c_ico-flower.png")!important;background-size:1.466667rem 1.2rem;}
+  </style>
+  <style>
+    .pop{position:fixed;width:100%;height:100%;background-color:rgba(0,0,0,.7);z-index:88;top:0;left:0;}
+    .p-box{width:8.453333rem;height:6.866667rem;background-color:#fdf4e2;border-radius:0.266667rem;position:absolute;top:50%;left:50%;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/c_popbg.png") no-repeat;background-position:center;background-size:contain;-webkit-transform:translate3d(-50%,-50%,0);transform:translate3d(-50%,-50%,0);font-size:0;}
+    .close{width:1.186667rem;height:1.186667rem;display:block;position:absolute;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/c_ico-close.png") no-repeat;background-position:center;background-size:contain;top:-1rem;right:0;}
+    .p-title{font-size:0.48rem;color:#f35f4a;text-align:center;line-height:1.44rem;padding-top:0.746667rem;}
+    .input-box{width:6.666667rem;overflow:hidden;margin:0.56rem auto 0.5rem;position:relative;}
+    input{outline:none;border:none;outline:none;border:none;text-indent:0.1rem;background-color:transparent;}
+    .p-input1{width:100%;border-bottom:1px solid #e08a46;font-size:0.48rem;display:block;margin-bottom:0.4rem;}
+    .p-input2{width:4.186667rem;border-bottom:1px solid #e08a46;display:inline-block;vertical-align:bottom;font-size:0.48rem;}
+    .p-yzmbtn{width:auto;height:0.773333rem;line-height:0.773333rem;padding:0 0.293333rem;border:1px solid #e08a46;border-radius:0.266667rem;display:inline-block;vertical-align:bottom;font-size:0.32rem;color:#ef6716;position:absolute;right:0;bottom:0;}
+    .p-yzmbtn.disable{color:#aaa;}
+    .p-submit{width:6.933333rem;height:1.333333rem;display:block;margin:0 auto 0;background:url("//udata.youban.com/webimg/weixin/xbllive/clockin/lottery/c-submit.png") no-repeat;background-size:contain;background-position:center;}
+    .pop.hide{visibility:hidden;}
+    .toast{position:fixed;bottom:2rem;left:0;width:100%;text-align:center;font-size:0;z-index:99;}
+    .toast-p{background-color:rgba(0,0,0,.75);color:#fff;font-size:0.4rem;padding:0.2rem 0.4rem;border-radius:0.133333rem;display:inline-block;}
+    @media screen and (min-device-width:760px){
+      /* ipad  */
+      .cnt{margin-top:6.4rem;}
+    }
+    @media screen and (min-device-width:1020px){
+      /* ipad pro */
+      .cnt{margin-top:9.4rem;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <ul class="cnt">
+      <li class="unlock">
+        <a href="">词汇课cat+儿歌</a>
+        <span class="day" data-i="D1"></span>
+        <span class="ico"></span>
+      </li>
+      <li class="lock">
+        <a href="">词汇课dog+儿歌</a>
+        <span class="day" data-i="D2"></span>
+        <span class="ico"></span>
+      </li>
+      <li class="lock">
+        <a href="">词汇课monkey+儿歌</a>
+        <span class="day" data-i="D3"></span>
+        <span class="ico"></span>
+      </li>
+      <li class="lock">
+        <a href="">词汇课cow+儿歌</a>
+        <span class="day" data-i="D4"></span>
+        <span class="ico"></span>
+      </li>
+      <li class="lock">
+        <a href="">对话课Animal Action+儿歌</a>
+        <span class="day" data-i="D5"></span>
+        <span class="ico"></span>
+      </li>
+      <li class="lock">
+        <a href="">对话课My First Bowing Day+儿歌</a>
+        <span class="day" data-i="D6"></span>
+        <span class="ico"></span>
+      </li>
+      <li class="lock">
+        <a href="">对话课Apring Hike+儿歌</a>
+        <span class="day" data-i="D7"></span>
+        <span class="ico"></span>
+      </li>
+      <li class="lock final">
+        <a href="">精彩回顾+毕业联会+奖品发放</a>
+        <span class="day" data-i="D8"></span>
+        <span class="ico"></span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="pop hide">
+    <div class="p-box">
+      <div class="close"></div>
+      <h3 class="p-title">小伴龙Live身份验证</h3>
+      <div class="input-box">
+        <input type="number" class="p-input1 i-phone" placeholder="请输入注册手机号">
+        <input type="text" class="p-input2 i-yzm" placeholder="请输入验证码">
+        <a class="p-yzmbtn">获取验证码</a>
+      </div>
+      <a class="p-submit"></a>
+    </div>
+  </div>
+
+  <div class="toast" style="display: none;">
+    <p class="toast-p">已发送短信至您的手机</p>
+  </div>
+  <script src="/js/zepto.min-fade.js"></script>
+  <script src="//res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+  <script>
+    var toastST;
+    function toast(str){
+      toastST&&clearTimeout(toastST);
+      if(str&&str!=''){
+        $('.toast').fadeIn();
+        $('.toast-p').text(str);
+        toastST = setTimeout(function(){
+          $('.toast').fadeOut();
+        }, 1200);
+      }else{
+      }
+    }
+
+    var needLogin = 1;
+
+    $('.cnt').on('click', 'li', function(){
+      var result = false;
+      var $that = $(this);
+      if($that.hasClass('lock')){
+        result = false;
+      }else{
+        result = true;
+      }
+      if(needLogin===1){
+        $('.pop').removeClass('hide');
+      }
+      return result;
+    });
+
+    $('.close').on('click', function(){
+      $('.pop').addClass('hide');
+    });
+
+
+    var yzmclick=0;
+    $('.p-yzmbtn').on('click', function(e){
+      var $that = $(this);
+      if($that.hasClass('disable')||yzmclick===1){
+        return false;
+      }
+      yzmclick=1;
+      setTimeout(function(){
+        yzmclick = 0;
+      }, 1200);
+      checkPhoneNumber();
+      return false;
+    });
+
+    var cd = 60;
+    function countDown(){
+      var $dom = $('.p-yzmbtn');
+      setTimeout(function(){
+        if(cd>1){
+          cd = cd - 1;
+          $dom.text((cd-1)+'秒重试');
+          countDown();
+        }else{
+          $dom.text('获取验证码');
+          $dom.removeClass('disable');
+          cd = 60;
+        }
+      }, 1000);
+    }
+    function checkPhoneNumber(){
+      var pp = $('.i-phone').val().trim();
+      if(pp==''){
+        toast('请正确填写您的手机号');
+        return;
+      }
+      if(!(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(pp))){ 
+        toast('请正确填写您的手机号');
+        return; 
+      } 
+      $.ajax({
+        url: "/api/fenxiao/vcode.json", //TODO 修改接口
+        type: "POST",
+        data: "phone="+pp,
+        dataType: "json",
+        cache: false,
+        success: function(data){
+          if(data.rc==0){
+            $('.p-yzmbtn').addClass('disable').text('60秒后重试');
+            countDown();
+          }else{
+            toast(data.msg);
+          }
+        },
+        fail: function(e){
+          console.log('校验失败');
+          toast(e);
+        }
+      });
+    }
+    function checkCode(){
+      var pp = $('.i-phone').val().trim() || '';
+      var code = $('.i-yzm').val().trim() || '';
+      if(pp==''||code==''){
+        toast('请先完成手机验证');
+        return;
+      }
+      if(!(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(pp))){ 
+        toast('请正确填写您的手机号');
+        return;
+      }
+
+      $.ajax({
+        url: "/api/fenxiao/register.json",  // TODO 修改接口
+        type: "POST",
+        data: "phone="+pp+"&vcode="+code,
+        dataType: "json",
+        cache: false,
+        success: function(data){
+          if(data.rc==0){
+            toast('登录成功');
+            setTimeout(() => {
+              window.location.href = '/'; 
+            }, 1000);
+          }else{
+            toast(data.msg);
+            $('.i-yzm').focus();
+          }
+        },
+      });
+    }
+    
+    var _clickflag = 0;
+    $('.p-submit').on('click', function(e){
+      if(_clickflag==1){
+        return;
+      }
+      _clickflag = 1;
+      setTimeout(function(){
+        _clickflag = 0;
+      }, 1200);
+      checkCode();
+      return false;
+    });
+
+
+  </script>
+  <script>
+    var SH_DataObj = {
+      img : "//udata.youban.com/webimg/weixin/newyear2018/share-ico.png",
+      title : "小伴龙10万新春礼包大派送！",
+      dec: "人人有份，最高888元。你也快来参加吧！",
+      fullURL: ""+window.location.href,
+      host: ""+window.location.host,
+      shortURL: ""+window.location.href.split("?")[0],
+      protocol: ""+document.location.protocol,
+      userName: '',
+      avatar: '',
+      canShare: false,
+    };
+   
+    if(SH_DataObj.protocol==='http' || SH_DataObj.protocol==='https'){
+    }else{
+      SH_DataObj.protocol = 'http';
+    }
+    SH_DataObj.img = SH_DataObj.protocol + ":" + SH_DataObj.img;//在WXSHDATA中图片地址要带协议http/https
+
+    function Wx_shareWhere(){
+      $.get('/common/record.json?childrenday=childrenday_index_share_success',{}, function(data){});
+    }
+
+    var WXSHDATA = {
+      title: SH_DataObj.title,
+      link: encodeURI(SH_DataObj.shortURL),
+      imgUrl: SH_DataObj.img,
+      type: "link",
+      dataUrl: "",
+      desc: SH_DataObj.dec,
+      success: function() {
+        //Wx_shareWhere();
+      },
+      cancel: function(){}
+    };
+    
+    function WxDo(uflag){
+      //分享
+      $.post('/weixin/config', {
+        url: SH_DataObj.fullURL,
+      }, function(data) {
+        data = JSON.parse( data );
+        //console.log(data);
+        var apilist = [
+          'onMenuShareTimeline',
+          'onMenuShareAppMessage',
+          'showOptionMenu',
+          'hideOptionMenu',
+          'hideMenuItems'
+        ];
+        wx.config({
+          debug: false,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: apilist
+        });
+        wx.error(function(res) {
+          console.log(JSON.stringify(res));
+        });
+        wx.ready(function() {
+          if(uflag){
+            wx.onMenuShareAppMessage(WXSHDATA);
+            wx.onMenuShareTimeline(WXSHDATA); //朋友圈
+          }else{
+            wx.hideMenuItems({
+              menuList: [
+                "menuItem:share:appMessage",
+                "menuItem:share:timeline",
+                "menuItem:share:qq",
+                "menuItem:share:weiboApp",
+                "menuItem:favorite",
+                "menuItem:share:facebook",
+                "menuItem:share:QZone",
+                "menuItem:editTag",
+                "menuItem:delete",
+                "menuItem:copyUrl",
+                "menuItem:originPage",
+                "menuItem:readMode",
+                "menuItem:openWithQQBrowser",
+                "menuItem:openWithSafari",
+                "menuItem:share:email",
+              ] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮
+            });
+          }
+        });
+      });
+    }
+    WxDo(SH_DataObj.canShare);
+  </script>
+</body>
+</html>

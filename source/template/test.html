@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .landscapescreen{width: 100%;height:100%;width: 100vw;height: 100vh;color: #fff;background-color: #008c8c;font-size: 22px;text-align: center;display: none;z-index: 999999;position: fixed;line-height:100%;top: 0;left: 0;}
+    .landscapescreen span{top: 50%;position: absolute;left: 20%;right: 20%;display: none;}
+    /* @media screen and (orientation: landscape){.landscapescreen,.landscapescreen span{display: block;}} */
+  </style>
+</head>
+<body>
+  <div id="landscapescreen" class="landscapescreen"><span class="landscapescreen-span">为了更好的体验，请使用竖屏浏览</span></div>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <p><input type="text"></p>
+  <script src="/js/vconsole.min.js"></script>
+  <script>
+    function orient() {
+        if (window.orientation == 0 || window.orientation == 180) {
+          console.log('shu');
+          document.querySelector('.landscapescreen-span').style.display = 'none';
+          document.querySelector('.landscapescreen').style.display = 'none';
+          return false;
+        }
+        else if (window.orientation == 90 || window.orientation == -90) {
+          orientation = 'landscape';
+          document.querySelector('.landscapescreen').style.display = 'block';
+          document.querySelector('.landscapescreen-span').style.display = 'block';
+          console.log('heng')
+          return false;
+        }
+      }
+
+    window.onresize = function(){
+      orient();
+    };
+  </script>
+</body>
+</html>
